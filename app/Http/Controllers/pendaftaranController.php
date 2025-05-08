@@ -36,12 +36,10 @@ class pendaftaranController extends Controller
     public function store(Request $request)
     {
         $pendaftaran                = new pendaftaran();
-        $pendaftaran->nik           = $request->nik;
         $pendaftaran->nama_lengkap  = $request->nama_lengkap;
         $pendaftaran->agama         = $request->agama;
         $pendaftaran->jenis_kelamin = $request->jenis_kelamin;
         $pendaftaran->asal_sekolah  = $request->asal_sekolah;
-        $pendaftaran->alamat        = $request->alamat;
         $pendaftaran->tanggal_lahir = $request->tanggal_lahir;
         $pendaftaran->save();
         return redirect()->route('pendaftaran.index');
@@ -55,7 +53,8 @@ class pendaftaranController extends Controller
      */
     public function show($id)
     {
-        //
+         $pendaftaran = Pendaftaran::findOrFail($id);
+        return view('pendaftaran.show', compact('pendaftaran'));
     }
 
     /**
@@ -79,12 +78,10 @@ class pendaftaranController extends Controller
     public function update(Request $request, $id)
     {
         $pendaftaran                = pendaftaran::findOrFail($id);
-        $pendaftaran->nik           = $request->nik;
         $pendaftaran->nama_lengkap  = $request->nama_lengkap;
         $pendaftaran->agama         = $request->agama;
         $pendaftaran->jenis_kelamin = $request->jenis_kelamin;
         $pendaftaran->asal_sekolah  = $request->asal_sekolah;
-        $pendaftaran->alamat        = $request->alamat;
         $pendaftaran->tanggal_lahir = $request->tanggal_lahir;
         $pendaftaran->save();
         return redirect()->route('pendaftaran.index');

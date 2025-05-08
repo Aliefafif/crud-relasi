@@ -10,17 +10,17 @@ class BukuController extends Controller
     public function index()
     {
         $buku = Buku::all();
-        return view('buku.index', compact('buku'));
+        return view('Buku.index', compact('buku'));
     }
 
     public function create()
     {
-        return view('buku.create');
+        return view('Buku.create');
     }
 
     public function store(Request $request)
     {
-        // // validasi
+        // validasi
         // $validated = $request->validate([
         //     'nama_buku'      => 'required|unique:bukus',
         //     'genre_buku'          => 'required',
@@ -47,32 +47,33 @@ class BukuController extends Controller
         }
 
         $buku->save();
-        return redirect()->route('Buku.index')->with('success', 'Data erhasil disimpan');
+        session()->flash('success', 'data berhasil disimpan');
+        return redirect()->route('Buku.index');
     }
 
     public function show($id)
     {
         $buku = Buku::findOrFail($id);
-        return view('buku.show', compact('buku'));
+        return view('Buku.show', compact('buku'));
     }
 
     public function edit($id)
     {
         $buku = Buku::findOrFail($id);
-        return view('buku.edit', compact('buku'));
+        return view('Buku.edit', compact('buku'));
     }
 
     public function update(Request $request, $id)
     {
-        $validated = $request->validate([
-            'nama_buku'      => 'required',
-            'genre_buku'     => 'required',
-            'harga'          => 'required|numeric',
-            'stok'           => 'required|numeric',
-            'penerbit'       => 'required',
-            'tanggal_terbit' => 'required',
-            'foto'           => 'nullable|mimes:jpg,png|max:1024',
-        ]);
+        // $validated = $request->validate([
+        //     'nama_buku'      => 'required',
+        //     'genre'          => 'required',
+        //     'harga'          => 'required|numeric',
+        //     'stok'           => 'required|numeric',
+        //     'penerbit'       => 'required',
+        //     'tanggal_terbit' => 'required',
+        //     'foto'           => 'nullable|mimes:jpg,png|max:1024',
+        // ]);
 
         $buku                 = Buku::findOrFail($id);
         $buku->nama_buku      = $request->nama_buku;
@@ -91,7 +92,9 @@ class BukuController extends Controller
         }
 
         $buku->save();
-        return redirect()->route('Buku.index')->with('success', 'Data Berhasil Ubah');
+        session()->flash('success', 'data berhasil disimpan');
+        return redirect()->route('Buku.index');
+
     }
 
     public function destroy($id)
@@ -103,6 +106,6 @@ class BukuController extends Controller
         }
 
         $buku->delete();
-        return redirect()->route('Buku.index')->with('success', 'Data Berhasil Di hapus');
+        return redirect()->route('Buku.index')->with('success', 'data berhasil dihapus');
     }
 }

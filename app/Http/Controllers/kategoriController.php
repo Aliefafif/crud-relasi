@@ -1,8 +1,8 @@
 <?php
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Kategori;
+use Illuminate\Http\Request;
 
 class kategoriController extends Controller
 {
@@ -38,7 +38,7 @@ class kategoriController extends Controller
         $kategori       = new Kategori();
         $kategori->nama = $request->nama;
 
-        $Kategori->save();
+        $kategori->save();
         return redirect()->route('kategori.index')->with('success', 'Data erhasil disimpan');
     }
 
@@ -93,10 +93,10 @@ class kategoriController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-   {
-    $kategori = Kategori::findOrFail($id);
-    $kategori->delete();
-    return redirect()->route('kategori.index');
-}
+    {
+        $kategori = Kategori::findOrFail($id);
+        $kategori->delete();
+        return redirect()->route('kategori.index');
+    }
 
 }

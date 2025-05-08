@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class pendaftaran extends Model
 {
     use HasFactory;
-    protected $fillable = ['nik','nama_lengkap','jenis_kelamin','tanggal_lahir','agama','alamat','asal_sekolah'];
+    protected $fillable = ['nama_lengkap','jenis_kelamin','tanggal_lahir','agama','asal_sekolah'];
     public $timestamp = true;
 }

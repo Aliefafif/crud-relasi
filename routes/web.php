@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FrontController;
 use App\Models\barang;
 use App\Models\pendaftaran;
 use App\Http\Controllers\PostController;
@@ -14,6 +15,8 @@ use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\PembeliController;
 use App\Http\Controllers\ObatController;
 use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\komikController;
+use App\Http\middleware\isAdmin;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,9 +29,12 @@ use App\Http\Controllers\TransaksiController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+// Front
+route::get('/', [FrontController::class, 'index']);
 
 Route::get('/about', function () {
     return'ini halaman about';
@@ -96,22 +102,21 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::resource('pendaftaran',pendaftaranController::class);
 
-Route::resource('Registrasi',RegistrasiController::class);
+// crud
+// Role admin
+Route::prefix('admin')->middleware('auth',isAdmin::class)->group(function () {
 
-Route::resource('Buku',BukuController::class);
+    Route::resource('pendaftaran',pendaftaranController::class);
+    Route::resource('Registrasi',RegistrasiController::class);
+    Route::resource('Buku', BukuController::class);
+    Route::resource('Pengguna',PenggunaController::class);
+    Route::resource('telepon',TeleponController::class);
+    Route::resource('kategori',kategoriController::class);
+    Route::resource('produk',ProdukController::class);
+    Route::resource('pembeli',PembeliController::class);
+    Route::resource('obat',ObatController::class);
+    Route::resource('transaksi',TransaksiController::class);
+    Route::resource('komik',KomikController::class);
 
-Route::resource('Pengguna',PenggunaController::class);
-
-Route::resource('telepon',TeleponController::class);
-
-Route::resource('kategori',kategoriController::class);
-
-Route::resource('produk',ProdukController::class);
-
-Route::resource('pembeli',PembeliController::class);
-
-Route::resource('obat',ObatController::class);
-
-Route::resource('transaksi',TransaksiController::class);
+});
